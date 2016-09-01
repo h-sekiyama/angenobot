@@ -18,6 +18,15 @@ module.exports = (robot) ->
     item = msg.random items
     msg.reply "#{item}に決まりにゃ！"
 
+  robot.respond /twitter (.*)/i, (msg) ->
+    keyword = encodeURIComponent msg.match[1]
+    request = msg.http('http://search.twitter.com/search.json')
+                          .query(q: keyword)
+                          .get()
+    request (err, res, body) ->
+      json = JSON.parse body
+      msg.send json.results[0].text if json.results.length > 0
+      
   # robot.respond /open the (.*) doors/i, (res) ->
   #   doorType = res.match[1]
   #   if doorType is "pod bay"
