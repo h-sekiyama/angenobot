@@ -13,6 +13,11 @@ module.exports = (robot) ->
   robot.hear /sushi|すし|スシ|寿司/i, (res) ->
     res.send "お寿司がたべたいにゃー"
 
+  robot.hear /(.+)から選べ/, (msg) ->
+    items = msg.match[1].split(/[　・、\s]+/)
+    item = msg.random items
+    msg.reply "#{item}に決まりにゃ！"
+
   # robot.respond /open the (.*) doors/i, (res) ->
   #   doorType = res.match[1]
   #   if doorType is "pod bay"
