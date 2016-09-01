@@ -104,3 +104,6 @@ module.exports = (robot) ->
   # robot.respond /sleep it off/i, (res) ->
   #   robot.brain.set 'totalSodas', 0
   #   res.reply 'zzzzz'
+
+  robot.hear /(sushi|すし|スシ|寿司)/i, (msg) ->
+    msg.send "スシが食べたいにゃー。”
