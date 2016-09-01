@@ -18,15 +18,15 @@ module.exports = (robot) ->
     item = msg.random items
     msg.reply "#{item}に決まりにゃ！"
 
-  robot.respond /twitter (.*)/i, (msg) ->
+  robot.respond /(.*)のおいしいお店/i, (msg) ->
     keyword = encodeURIComponent msg.match[1]
-    request = msg.http('http://search.twitter.com/search.json')
-                          .query(q: keyword)
+    request = msg.http('http://api.gnavi.co.jp/RestSearchAPI/20150630/')
+                          .query(keyid: b2f39df5107e4f80423a086eb54d6148, freeword: keyword)
                           .get()
     request (err, res, body) ->
       json = JSON.parse body
-      msg.send json.results[0].text if json.results.length > 0
-      
+      msg.send json.results[0].name + "で決まりにゃ！" if json.results.length > 0
+
   # robot.respond /open the (.*) doors/i, (res) ->
   #   doorType = res.match[1]
   #   if doorType is "pod bay"
